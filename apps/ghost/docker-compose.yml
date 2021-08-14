@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  server: 
+    image: ghost:4.11.0@sha256:0a201e53d21a61caf39c048c44b0191641164c207b92ba1930a9bf2892445dac
+    user: 1000:1000
+    restart: on-failure
+    ports:
+      - ${APP_GHOST_PORT}:${APP_GHOST_PORT}
+    volumes:
+      - ${APP_DATA_DIR}:/var/lib/ghost/content
+    environment: 
+      - url=http://${APP_HIDDEN_SERVICE}
+      - privacy__useTinfoil='true'
+    networks:
+      default:
+        ipv4_address: $APP_GHOST_IP
